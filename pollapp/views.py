@@ -1,11 +1,80 @@
-from plistlib import UID
+from django.http import HttpResponseRedirect
 from django.shortcuts import  render, redirect
 from django.template import context
 from pollapp.models import Question, Answers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 # Create your views here.
+from django.contrib import messages
+from django.contrib.auth import authenticate , login
 
+def login_view(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user_obj = User.objects.filter(username = email)
+        if not user_obj.exists():
+            messages.debug(request, "Account not found")
+            return redirect('/register/')
+        user_obj = authenticate(username = email, password = password)
+        if user_obj:
+            login(request, user_obj)
+            return redirect('/dashboard/')
+        messages.debug(request,'Invalid User')
+        return redirect('/')
+    else:
+        return render(request, "login.html")
+
+def register_view(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user_obj = User.objects.filter(username = email)
+        if user_obj.exists():
+            return redirect('/register/')
+        user_obj = User.objects.create(username = email)
+        user_obj.set_password(password)
+        user_obj.save()
+        return redirect('/')
+
+    else:
+        return render(request, "register.html")
+
+def dashboard(request):
+    return render(request , 'dashboard.html')
+
+def create_poll(request):
+    if request.method == "POST":
+        question = request.POST.get('question')
+        answer = request.POST.getlist('answers')
+        question_obj = Question.objects.create(
+            user = request.user,
+            question_text = question
+        )
+        for answer in answer:
+            Answers.objects.create(
+                answer_text = answer,
+                question = question_obj
+            )
+        messages.info(request, 'Your Poll Has been created')
+        return redirect('/create_poll/')
+    return render(request, 'create_poll.html')
+
+def see_answers(request):
+    questions = Question.objects.filter(user = request.user)
+    for question in questions:
+
+        answe =  question.answer.all()
+        for i in answe:
+            print(i.answer_text)
+            print("calculate % ", i.calculate_percentage)
+    context = {
+        'questions' : questions,
+        
+        }
+    return render(request ,'see_ansswers.html' ,context)
 
 @api_view(['POST'])
 def save_question_result(request):
@@ -31,8 +100,6 @@ def save_question_result(request):
 def question_detail(request, question_uid):
     try:
         question_obj = Question.objects.get(uid = question_uid)
-
-        print(question_obj.question_text)
         context={
             "question": question_obj,
             "answer" : Answers.objects.all()

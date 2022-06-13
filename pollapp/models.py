@@ -34,6 +34,17 @@ class Answers(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answer")
     answer_text = models.CharField(max_length=100)
     counter = models.IntegerField(default=0)
+    def calculate_percentage(self):
+        answers = self.question.answer.all()
+        total_votes = 0
+        for answer in answers:
+            total_votes += answer.counter
+        
+        payload = []
+        try:
+            return int((self.counter / total_votes) * 100)
+        except Exception as e:
+            return 0   
 
     def __str__(self) -> str:
         return self.answer_text

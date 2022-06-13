@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pollapp.views import question_detail,save_question_result
+from pollapp.views import question_detail,save_question_result, login_view, dashboard, register_view, create_poll,see_answers
 
 urlpatterns = [
+    path('' , login_view , name="login"),
+    path('register/' , register_view , name="register_view"),
+    path('dashboard/' , dashboard , name="dashboard"),
+    path('create_poll/' , create_poll , name="create_poll"),
+    path('see_answers/' , see_answers , name="see_answers"),
+
     path('admin/', admin.site.urls),
     path('question/<question_uid>/', question_detail, name = "question_detail"),
     path('api/save_question_result/', save_question_result, name = "save_question_result"),

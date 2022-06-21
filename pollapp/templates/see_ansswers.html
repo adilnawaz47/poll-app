@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block title %}see answers{% endblock title %}
+{% block content %}
+
+{% comment %} <!DOCTYPE html>
 <html>
 
 <head>
@@ -53,10 +57,95 @@
         <li><a class="waves-effect" href="#!"> <i class="material-icons">account_circle</i> Logout</a></li>
     </ul>
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+ {% endcomment %}
+ 
+<div class="container">
+
+    <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Answers</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.no</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Questions</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Answers</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Link</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for question in  questions %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2">
+                          <div class="my-auto">
+                            <h6 class="mb-0 text-sm">{{forloop.counter}}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-sm font-weight-bold mb-0">{{question.question_text}}</p>
+                      </td>
+                      <td>
+                        <a class="waves-effect waves-light btn modal-trigger" href="#modal{{forloop.counter}}">Modal</a>
+                        <div id="modal-{{forloop.counter}}" class="modal">
+                            <div class="modal-content">
+                                <h4>Modal Header</h4>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Answer</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody>
+                                        {% for answer in question.answer.all %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{answer.answer_text}}</td>
+                                            <td>{{answer.calculate_percentage}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+    
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                            </div>
+                        </div>
+                      </td>
+                      <td class="align-middle text-center">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <a href="/question/{{question.uid}}" target="_blank" class=" btn btn-success waves-effect waves-light btn" >Open</a>
+                          
+                        </div>
+                      </td>                      
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
-    <table class="container">
+
+
+    {% comment %} <table class="container mt-5">
         <thead>
             <tr>
                 <th>S.no</th>
@@ -72,7 +161,7 @@
                 <td>{{forloop.counter}}</td>
                 <td>{{question.question_text}}</td>
                 <td>
-                    <a class="waves-effect waves-light btn modal-trigger" href="#modal-{{forloop.counter}}">See ANswer</a>
+                    <a class="btn btn-primary waves-effect waves-light btn modal-trigger"  data-target="#modal-{{forloop.counter}}" href="#modal-{{forloop.counter}}">See ANswer</a>
                     <!-- Modal Structure -->
                     <div id="modal-{{forloop.counter}}" class="modal">
                         <div class="modal-content">
@@ -111,34 +200,25 @@
             </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table> {% endcomment %}
+</div>
 
+    {% block js %}
 
+    
 
 
     <script>
-        (function ($) {
-    $(function () {
-
-        //initialize all modals           
-        $('.modal').modal();
-
-        //now you can open modal from code
-        $('#modal1').modal('open');
-
-        //or by click on trigger
-        $('.trigger-modal').modal();
-
-    }); // end of document ready
-})(jQuery); // end of jQuery name space
-        (function ($) {
-            $(function () {
-
-                $('.sidenav').sidenav();
-                $('.parallax').parallax();
-
-            }); // end of document ready
-        })(jQuery);
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems, options);
+          });
+        
+          // Or with jQuery
+        
+          $(document).ready(function(){
+            $('.modal').modal();
+          });
 
 
         $("#rowAdder").click(function () {
@@ -157,7 +237,10 @@
         })
     </script>
 
+    {% endblock js %}
+    {% endblock content %}
 
+{% comment %} 
 </body>
 
-</html>
+</html> {% endcomment %}

@@ -1,5 +1,9 @@
 asgiref==3.5.2
+<<<<<<< HEAD
 Django==4.0.5
+=======
+Django==3.2.5
+>>>>>>> fb7afa5cbedb62bb29405857a2788cd47e0d0606
 djangorestframework==3.13.1
 pytz==2022.1
 sqlparse==0.4.2

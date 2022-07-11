@@ -38,12 +38,18 @@ def register_view(request):
         user_obj.set_password(password)
         user_obj.save()
         return redirect('/')
-
     else:
         return render(request, "register.html")
 
 def dashboard(request):
-    return render(request , 'dashboard.html')
+    total_questions = len(Question.objects.all())
+    user = len(User.objects.all())
+    context ={
+        "user": user,
+        "total_questions" : total_questions
+    }
+    
+    return render(request , 'dashboard.html', context)
 
 def create_poll(request):
     if request.method == "POST":
@@ -108,3 +114,18 @@ def question_detail(request, question_uid):
     except Exception as e:
         print(e)
         return redirect('/question/')
+
+
+def answers(request, uid):
+    questions = Question.objects.filter(uid = uid)
+    for question in questions:
+
+        answe =  question.answer.all()
+        for i in answe:
+            print(i.answer_text)
+            print("calculate % ", i.calculate_percentage)
+    context = {
+        'questions' : questions,
+        
+        }
+    return render(request ,'answers.html' ,context)

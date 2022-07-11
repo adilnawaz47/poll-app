@@ -1,4 +1,5 @@
 {% extends 'index.html' %}
+{% block title %}dashboard{% endblock title %}
 {% comment %} <!DOCTYPE html>
 <html>
 
@@ -83,8 +84,8 @@
               <i class="material-icons opacity-10">weekend</i>
             </div>
             <div class="text-end pt-1">
-              <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-              <h4 class="mb-0">$53k</h4>
+              <p class="text-sm mb-0 text-capitalize">Total Question</p>
+              <h4 class="mb-0">{{total_questions}}</h4>
             </div>
           </div>
           <hr class="dark horizontal my-0">
@@ -101,7 +102,7 @@
             </div>
             <div class="text-end pt-1">
               <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-              <h4 class="mb-0">2,300</h4>
+              <h4 class="mb-0">{{user}}</h4>
             </div>
           </div>
           <hr class="dark horizontal my-0">
@@ -111,8 +112,6 @@
         </div>
       </div>
     </div>
-
-
   </div>
       
 {% endblock content %}

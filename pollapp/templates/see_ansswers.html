@@ -90,12 +90,13 @@
                             <h6 class="mb-0 text-sm">{{forloop.counter}}</h6>
                           </div>
                         </div>
+                        
                       </td>
                       <td>
                         <p class="text-sm font-weight-bold mb-0">{{question.question_text}}</p>
                       </td>
                       <td>
-                        <a class="waves-effect waves-light btn modal-trigger" href="#modal{{forloop.counter}}">Modal</a>
+                        <a class="btn btn-secondary waves-effect waves-light btn" href="{% url 'answers' question.uid %}">See Answer</a>
                         <div id="modal-{{forloop.counter}}" class="modal">
                             <div class="modal-content">
                                 <h4>Modal Header</h4>

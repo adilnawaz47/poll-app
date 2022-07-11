@@ -59,18 +59,27 @@
  {% endcomment %}
  {% block content %}
 
-    <div class="row container">
+    <div class="row container mt-3">
         <form class="col s12" method="POST" mt-5>
             {% csrf_token %}
-            <div class="row">
-                {% comment %} <div class="input-field col s12"> 
-                    <input placeholder="Placeholder" name="question" id="first_name" type="text" class="validate">
-                    <label for="first_name">Question</label>
-                </div> {% endcomment %}
-                <div class="input-group input-group-outline mb-3" >
-                    <label class="form-label" >Question</label>
-                    <input type="text" name="question" id="first_name"  class="form-control">
-                  </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    {% comment %} <div class="input-field col s12"> 
+                        <input placeholder="Placeholder" name="question" id="first_name" type="text" class="validate">
+                        <label for="first_name">Question</label>
+                    </div> {% endcomment %}
+                        <div class="input-group input-group-outline mb-3" >
+                            <div class="input-group">
+                                <label class="form-label" >Question</label>
+                            </div>
+                            <label class="form-label">Question</label>
+                            <input type="text" name="question" id="first_name"  class="form-control">
+                        </div>
+                    {% comment %} <div class="input-group input-group-outline mb-3" >
+                        <label class="form-label" >Question</label>
+                        <input type="text" name="question" id="first_name"  class="form-control">
+                    </div> {% endcomment %}
+                </div>
             </div>
             <div class="col-lg-12">
                 <div id="row">
@@ -79,7 +88,7 @@
                         <div class="input-group">
 
                         </div>
-                        <label class="form-label" >Answer</label>
+                        <label class="form-label">Answer</label>
                         <input type="text" name="answers" id="first_name"  class="form-control">
                       </div>
 
@@ -97,10 +106,7 @@
                     </span> ADD
                 </button>
 
-                <button class="btn btn-primary" id="DeleteRow" type="button">
-                    <i class="bi bi-trash"></i>
-                    Delete
-                </button>
+                
             </div>
 
             <button class="btn btn-success waves-effect waves-light btn" type="submit">Submit</button>

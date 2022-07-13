@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pollapp.views import question_detail,save_question_result, login_view, dashboard, register_view, create_poll,see_answers
+from pollapp.views import question_detail,save_question_result, login_view, dashboard, register_view, create_poll,see_answers,answers
 
 urlpatterns = [
     path('' , login_view , name="login"),
@@ -27,4 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('question/<question_uid>/', question_detail, name = "question_detail"),
     path('api/save_question_result/', save_question_result, name = "save_question_result"),
+    # Modal is not working so i'm using this to showing answers
+    path('answers/<str:uid>/', answers, name = "answers"),
 ]

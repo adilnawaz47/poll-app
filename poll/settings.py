@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -117,10 +117,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
+**STATIC_TMP = os.path.join(BASE_DIR, 'static')**
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+
+**os.makedirs(STATIC_TMP, exist_ok=True)**
+
+os.makedirs(STATIC_ROOT, exist_ok=True)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
